@@ -54,13 +54,15 @@ public class Dog {
         System.out.println(getName() + " ran after the ball and brought it back to you!");
 
         // Update the dogs stats
-        updateHappiness(20);
+        updateHappiness(10);
         updateHunger(-20);
         if (getHappiness() <= 20 || getHunger() <= 20) {
             updateTired(true);
         }
 
         displayDogStats(); // Show the dogs stats to determine whether they can keep going
+
+        tick();
     }
 
     // Feed method
@@ -69,16 +71,20 @@ public class Dog {
         updateHappiness(10);
 
         displayDogStats(); // Show the dogs stats to determine whether they can keep going
+
+        tick();
     }
 
     // Display method
     public void displayDogStats() {
-        System.out.println("Hunger: " + getHunger());
-        System.out.println("Happiness: " + getHappiness());
-        System.out.println("Tired: " + getIsTired());
+        System.out.println("Hunger: " + getHunger() + " Happiness: " + getHappiness() + " Tired: " + getIsTired());
     }
 
     public void tick() {
-        // passage of time
+        if (getHunger() <= 50) {
+            System.out.println(getName() + " is getting hungry, you might want to feed them.");
+        } else if (getHappiness() <= 50) {
+            System.out.println(getName() + " doesn't seem to be enjoying themselves.");
+        }
     }
 }
