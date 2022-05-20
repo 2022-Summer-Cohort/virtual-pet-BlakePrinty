@@ -1,7 +1,5 @@
 package virtual_pet;
 
-import java.awt.*;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class VirtualPetApplication {
