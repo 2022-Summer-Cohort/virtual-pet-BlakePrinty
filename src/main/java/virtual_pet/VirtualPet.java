@@ -17,7 +17,7 @@ public class VirtualPet {
     public String getName() {
         return petName;
     }
-    public int getHunger() {
+    public int getHungerLevel() {
         return hungerLevel;
     }
     public int getStaminaLevel() {
@@ -61,7 +61,7 @@ public class VirtualPet {
     }
 
     public void tick() {
-        if (getHunger() <= 50) {
+        if (getHungerLevel() <= 50) {
             System.out.println(getName() + " seems to be hungry...");
             System.out.println("Maybe you should give them some food.");
         }
@@ -74,7 +74,7 @@ public class VirtualPet {
             System.out.println("Maybe you should give them some water.");
         }
 
-        if (getHunger() > 50 && getStaminaLevel() > 50 && getThirstLevel() > 50) {
+        if (getHungerLevel() > 50 && getStaminaLevel() > 50 && getThirstLevel() > 50) {
             System.out.println(getName() + " is eager to play!");
         }
     }
