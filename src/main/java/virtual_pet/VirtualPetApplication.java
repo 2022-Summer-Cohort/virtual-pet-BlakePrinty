@@ -5,64 +5,71 @@ import java.util.Scanner;
 public class VirtualPetApplication {
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
 
-        String petName; // Dogs name
-        String petBreed; // Dogs breed
-        int petAge; // Dogs age
-        int petHungerLevel = 100; // Dogs hunger level
-        int petHappinessLevel = 100; // Dogs happiness level
-        boolean petIsTired = false; // Whether the dog is tired
-        boolean dogNapping = false; // Flag for when the application will end
+        // Pet parameters
+        String petName;
+        int petHungerLevel = 100;
+        int petStaminaLevel = 100;
+        int petThirstLevel = 100;
 
-        // Menu Codes
-        int choice = -1;
+        // Flags
+        int choice;
+        boolean isTired = false;
 
-        // Get the information about the dog
-        System.out.println("What is the name of your dog?");
-        petName = input.nextLine();
-        System.out.println("What is your dogs breed?");
-        petBreed = input.nextLine();
-        System.out.println("How old is your dog?");
-        petAge = input.nextInt();
-        input.nextLine();
+        // Get the information from the user about the pet
+        System.out.println("What is the name of your pet?");
+        petName = in.nextLine();
 
-        Dog userDog = new Dog(petName, petBreed, petAge, petHungerLevel, petHappinessLevel, petIsTired);
+        // Create the pet
+        VirtualPet userPet = new VirtualPet(petName, petHungerLevel, petStaminaLevel, petThirstLevel);
 
-        while (!dogNapping) {
-            System.out.println("\nWhat would you like to do with " + userDog.getName() + "?");
-
-            if (userDog.getIsTired()) {
-                dogNapping = true;
+        // Run the game
+        while (!isTired) {
+            if (userPet.getStaminaLevel() <= 10) {
+                // Stop the game if the pet is out of stamina
+                isTired = true;
             } else {
-                DisplayMenu(); // Display the menu options
-                choice = input.nextInt();
-                input.nextLine();
+                // Let the dog tell the user their needs
+                userPet.tick();
 
-                switch(choice) {
+                // Let the user choose what they want to do with their pet
+                displayMenu();
+                choice = in.nextInt();
+                in.nextLine();
+
+                switch (choice) {
                     case 0:
-                        dogNapping = true; // End the game the dog wants to sleep
+                        isTired = true;
                         break;
                     case 1:
-                        userDog.playFetch(); // Play fetch
+                        userPet.givePetFood();
                         break;
                     case 2:
-                        userDog.feedPet(); // Feed the dog
+                        userPet.givePetRest();
+                        break;
+                    case 3:
+                        userPet.givePetWater();
+                        break;
+                    case 4:
+                        userPet.playWithPet();
                         break;
                     default:
-                        System.out.println("Unknown command...");
+                        System.out.println("Unknown option chosen...");
                 }
             }
         }
 
-        System.out.println("");
-        System.out.println(userDog.getName() + " was happy you played with them!");
+        System.out.println("\nYou finished playing with " + userPet.getName());
     }
 
-    public static void DisplayMenu() {
-        System.out.println("Quit: 0");
-        System.out.println("Play Fetch: 1");
-        System.out.println("Feed Dog: 2");
+    public static void displayMenu() {
+        System.out.println("\nWhat would you like to do?");
+        System.out.println("0. Quit");
+        System.out.println("1. Give pet food");
+        System.out.println("2. Give pet a rest");
+        System.out.println("3. Give pet water");
+        System.out.println("4. Play with pet");
     }
 
 }
