@@ -1,5 +1,7 @@
 package virtual_pet;
 
+import java.util.Random;
+
 public abstract class OrganicPet extends VirtualPet {
     private int hungerLevel;
     private int thirstLevel;
@@ -7,12 +9,14 @@ public abstract class OrganicPet extends VirtualPet {
     private int needsPottyLevel;
     private boolean isBored;
 
+    Random rand = new Random();
+
     public OrganicPet(String name, int age) {
         super(name, age);
-        this.hungerLevel = 10;
-        this.thirstLevel = 10;
-        this.boredomLevel = 0;
-        this.needsPottyLevel = 0;
+        this.hungerLevel = rand.nextInt(10);
+        this.thirstLevel = rand.nextInt(10);
+        this.boredomLevel = rand.nextInt(10);
+        this.needsPottyLevel = rand.nextInt(10);
         this.isBored = false;
     }
 
@@ -38,21 +42,57 @@ public abstract class OrganicPet extends VirtualPet {
 
     @Override
     public void feedPet() {
-        if (getHungerLevel()+2 > 10) {
+        if (getHungerLevel()+3 > 10) {
             hungerLevel = 10;
         } else {
-            hungerLevel += 2;
+            hungerLevel += 3;
         }
     }
     @Override
     public void waterPet() {
-        if (getThirstLevel()+2 > 10) {
+        if (getThirstLevel()+3 > 10) {
             thirstLevel = 10;
         } else {
-            thirstLevel += 2;
+            thirstLevel += 3;
         }
     }
+
+    @Override
+    public void playWithPet() {
+        if (getBoredomLevel()+2 > 10) {
+            boredomLevel = 10;
+        } else {
+            boredomLevel += 2;
+        }
+        if (getNeedsPottyLevel()+2 > 10) {
+            needsPottyLevel = 10;
+        } else {
+            needsPottyLevel += 2;
+        }
+    }
+
     public void updatePottyLevel(int change) {
+        if ( needsPottyLevel + change < 1) {
+            needsPottyLevel = 0;
+        }
         needsPottyLevel += change;
+    }
+    public void updateHungerLevel(int change) {
+        if ( hungerLevel + change < 1) {
+            hungerLevel = 0;
+        }
+        hungerLevel += change;
+    }
+    public void updateThirstLevel(int change) {
+        if ( thirstLevel + change < 1) {
+            thirstLevel = 0;
+        }
+        thirstLevel += change;
+    }
+    public void updateBoredom(int change) {
+        if ( boredomLevel + change < 1) {
+            boredomLevel = 0;
+        }
+        boredomLevel += change;
     }
 }

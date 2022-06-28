@@ -9,7 +9,6 @@ public class VirtualPetApplication {
 
         int choice;
         boolean gameOver = false;
-        int deadPets = 0;
 
         VirtualPetShelter gameShelter = new VirtualPetShelter();
         OrganicDog realDog = new OrganicDog("Myla", 7);
@@ -20,15 +19,10 @@ public class VirtualPetApplication {
         gameShelter.addPet(realCat);
         gameShelter.addPet(robotDog);
         gameShelter.addPet(robotCat);
+        int alivePets = gameShelter.petShelter.size();
 
         while (!gameOver) {
-            for (VirtualPet pet : gameShelter.petShelter) {
-                if (pet.isDead()) {
-                    deadPets++;
-                }
-            }
-            
-            if (deadPets>=2) {
+            if (alivePets<=2) {
                 gameOver = true;
             } else {
                 displayMenu();
@@ -66,12 +60,25 @@ public class VirtualPetApplication {
                     default:
                         System.out.println("Unknown choice...");
                 }
+
+//                for (VirtualPet pet : gameShelter.petShelter) {
+//                    if (pet.isDead()) {
+//                        gameShelter.removePet(pet.getName());
+//                    }
+//                }
+//                alivePets = gameShelter.petShelter.size();
+                for (VirtualPet pet : gameShelter.petShelter) {
+                    pet.displayStats();
+                }
+                for (VirtualPet pet : gameShelter.petShelter) {
+                    pet.tick();
+                }
             }
         }
     }
 
     public static void displayMenu() {
-        System.out.println("What would you like to do with your shelter?");
+        System.out.println("\nWhat would you like to do with your shelter?");
         System.out.println("0: Quit");
         System.out.println("1: Feed the pets");
         System.out.println("2: Give the pets Water");
@@ -81,4 +88,6 @@ public class VirtualPetApplication {
         System.out.println("6: Take the dogs for a walk");
         System.out.println("7: Clean all the pets areas");
     }
+
+
 }

@@ -1,22 +1,23 @@
 package virtual_pet;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class VirtualPet {
-    private ArrayList<String> petNeeds;
     private String name;
     private int age;
     private boolean isDead;
     private int needsPottyLevel;
     private boolean needsPotty;
 
+    Random rand = new Random();
+
     public VirtualPet(String name, int age) {
         this.name = name;
         this.age = age;
         this.isDead = false;
-        this.needsPottyLevel = 0;
+        this.needsPottyLevel = rand.nextInt(10) + 1;
         this.needsPotty = false;
-        this.petNeeds = new ArrayList<>();
     }
 
     // Getters
@@ -36,9 +37,7 @@ public abstract class VirtualPet {
         return needsPotty;
     }
 
-    public void displayStats() {
-        System.out.println(getName());
-    }
+    public void displayStats() {}
 
     // Override Methods
     public void feedPet() {}
@@ -78,6 +77,7 @@ public abstract class VirtualPet {
     public String getNoise() {
         return "";
     }
+    public void tick() {}
 
 }
 
