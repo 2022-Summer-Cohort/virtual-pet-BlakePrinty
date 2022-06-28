@@ -7,69 +7,78 @@ public class VirtualPetApplication {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        // Pet parameters
-        String petName;
-        int petHungerLevel = 100;
-        int petStaminaLevel = 100;
-        int petThirstLevel = 100;
-
-        // Flags
         int choice;
-        boolean isTired = false;
+        boolean gameOver = false;
+        int deadPets = 0;
 
-        // Get the information from the user about the pet
-        System.out.println("What is the name of your pet?");
-        petName = in.nextLine();
+        VirtualPetShelter gameShelter = new VirtualPetShelter();
+        OrganicDog realDog = new OrganicDog("Myla", 7);
+        OrganicCat realCat = new OrganicCat("Nala", 10);
+        RoboticDog robotDog = new RoboticDog("Tank", 1);
+        RoboticCat robotCat = new RoboticCat("Whiskers", 45);
+        gameShelter.addPet(realDog);
+        gameShelter.addPet(realCat);
+        gameShelter.addPet(robotDog);
+        gameShelter.addPet(robotCat);
 
-        // Create the pet
-        VirtualPet userPet = new VirtualPet(petName, petHungerLevel, petStaminaLevel, petThirstLevel);
-
-        // Run the game
-        while (!isTired) {
-            if (userPet.getStaminaLevel() <= 10) {
-                // Stop the game if the pet is out of stamina
-                isTired = true;
+        while (!gameOver) {
+            for (VirtualPet pet : gameShelter.petShelter) {
+                if (pet.isDead()) {
+                    deadPets++;
+                }
+            }
+            
+            if (deadPets>=2) {
+                gameOver = true;
             } else {
-                // Let the dog tell the user their needs
-                userPet.tick();
-
-                // Let the user choose what they want to do with their pet
                 displayMenu();
-                choice = in.nextInt();
-                in.nextLine();
+                choice = in.nextInt(); in.nextLine();
 
                 switch (choice) {
                     case 0:
-                        isTired = true;
+                        gameOver = true;
                         break;
                     case 1:
-                        userPet.givePetFood();
+                        // Give the organic pets food
+                        gameShelter.giveAllPetsFood();
                         break;
                     case 2:
-                        userPet.givePetRest();
+                        // Give the organic pets water
+                        gameShelter.giveAllPetsWater();
                         break;
                     case 3:
-                        userPet.givePetWater();
+                        // Give the robotic pets oil
+                        gameShelter.giveAllPetsOil();
                         break;
                     case 4:
-                        userPet.playWithPet();
+                        // Maintain the robotic pets
+                        gameShelter.maintainAllPets();
+                        break;
+                    case 5:
+                        gameShelter.playWithAllPets();
+                        break;
+                    case 6:
+                        gameShelter.walkAllPets();
+                        break;
+                    case 7:
+                        gameShelter.cleanAllPetAreas();
                         break;
                     default:
-                        System.out.println("Unknown option chosen...");
+                        System.out.println("Unknown choice...");
                 }
             }
         }
-
-        System.out.println("\nYou finished playing with " + userPet.getName());
     }
 
     public static void displayMenu() {
-        System.out.println("\nWhat would you like to do?");
-        System.out.println("0. Quit");
-        System.out.println("1. Give pet food");
-        System.out.println("2. Give pet a rest");
-        System.out.println("3. Give pet water");
-        System.out.println("4. Play with pet");
+        System.out.println("What would you like to do with your shelter?");
+        System.out.println("0: Quit");
+        System.out.println("1: Feed the pets");
+        System.out.println("2: Give the pets Water");
+        System.out.println("3: Give the pets Oil");
+        System.out.println("4: Maintain the pets");
+        System.out.println("5: Play with all the pets");
+        System.out.println("6: Take the dogs for a walk");
+        System.out.println("7: Clean all the pets areas");
     }
-
 }

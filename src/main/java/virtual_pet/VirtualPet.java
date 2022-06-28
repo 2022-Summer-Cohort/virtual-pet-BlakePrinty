@@ -1,166 +1,83 @@
 package virtual_pet;
 
-import java.util.Random;
+import java.util.ArrayList;
 
-public class VirtualPet {
+public abstract class VirtualPet {
+    private ArrayList<String> petNeeds;
     private String name;
-    private int hunger;
-    private int thirst;
-    private int happiness;
+    private int age;
+    private boolean isDead;
+    private int needsPottyLevel;
+    private boolean needsPotty;
 
-    public VirtualPet(String name, int hunger, int thirst, int happiness) {
+    public VirtualPet(String name, int age) {
         this.name = name;
-        this.hunger = hunger;
-        this.thirst = thirst;
-        this.happiness = happiness;
+        this.age = age;
+        this.isDead = false;
+        this.needsPottyLevel = 0;
+        this.needsPotty = false;
+        this.petNeeds = new ArrayList<>();
     }
 
+    // Getters
     public String getName() {
         return name;
     }
-
-    public int getHunger() {
-        return hunger;
+    public int getAge() {
+        return age;
     }
-
-    public int getThirst() {
-        return thirst;
+    public boolean isDead() {
+        return isDead;
     }
-
-    public int getHappiness() {
-        return happiness;
+    public int getNeedsPottyLevel() {
+        return needsPottyLevel;
     }
-
-    public void giveFood() {
-        if (hunger+2 > 10) {
-            hunger = 10;
-        } else {
-            hunger += 2;
-        }
-    }
-
-    public void giveWater() {
-        if (thirst+2 > 10) {
-            thirst = 10;
-        } else {
-            thirst += 2;
-        }
-    }
-
-    public void playWithPet() {
-        if (happiness+2 > 10) {
-            happiness = 10;
-        } else {
-            happiness += 2;
-        }
-        hunger -= 1;
-        thirst -= 1;
-
-        System.out.println("You threw a ball and played fetch with " + ANSI_CYAN + getName() + ANSI_RESET);
-    }
-
-    public void displayHunger() {
-        int count = 0;
-        System.out.print(ANSI_PURPLE + "Hunger: " + ANSI_RESET);
-        for (int i = 0; i < getHunger(); i++) {
-            System.out.print(ANSI_GREEN + "♥" + ANSI_RESET);
-            count++;
-            if (i == getHunger()-1) {
-                while (count != 10) {
-                    System.out.print(ANSI_RED + "♥" + ANSI_RESET);
-                    count++;
-                }
-            }
-        }
-        if (getHunger() == 0) {
-            System.out.print(ANSI_RED + "♥♥♥♥♥♥♥♥♥♥" + ANSI_RESET);
-        }
-        System.out.println();
-    }
-
-    public void displayThirst() {
-        int count = 0;
-        System.out.print(ANSI_BLUE + "Thirst: " + ANSI_RESET);
-        for (int i = 0; i < getThirst(); i++) {
-            System.out.print(ANSI_GREEN + "♥" + ANSI_RESET);
-            count++;
-            if (i == getThirst()-1) {
-                while (count != 10) {
-                    System.out.print(ANSI_RED + "♥" + ANSI_RESET);
-                    count++;
-                }
-            }
-        }if (getThirst() == 0) {
-            System.out.print(ANSI_RED + "♥♥♥♥♥♥♥♥♥♥" + ANSI_RESET);
-        }
-        System.out.println();
-    }
-
-    public void displayHappiness() {
-        int count = 0;
-        System.out.print(ANSI_YELLOW + "Happiness: " + ANSI_RESET);
-        for (int i = 0; i < getHappiness(); i++) {
-            System.out.print(ANSI_GREEN + "♥" + ANSI_RESET);
-            count++;
-            if (i == getHappiness()-1) {
-                while (count != 10) {
-                    System.out.print(ANSI_RED + "♥" + ANSI_RESET);
-                    count++;
-                }
-            }
-        }
-        if (getHappiness() == 0) {
-            System.out.print(ANSI_RED + "♥♥♥♥♥♥♥♥♥♥" + ANSI_RESET);
-        }
-        System.out.println();
+    public boolean getNeedsPotty() {
+        return needsPotty;
     }
 
     public void displayStats() {
-        displayHunger();
-        displayThirst();
-        displayHappiness();
+        System.out.println(getName());
     }
 
-    public boolean isAlive() {
-        return getHunger() != 0 && getThirst() != 0 && getHappiness() != 0;
+    // Override Methods
+    public void feedPet() {}
+    public void waterPet() {}
+    public void oilPet() {}
+    public void cleanArea() {} // MAYBE NOT AN OVERRIDE
+    public void maintainPet() {}
+    public void walkPet() {} // ONLY FOR DOGS
+    public void playWithPet() {}
+    public void makeNoise() {}
+
+    // Override Getters
+    public int getHungerLevel() {
+        return 0;
+    }
+    public int getThirstLevel() {
+        return 0;
+    }
+    public int getBoredomLevel() {
+        return 0;
+    }
+    public int getOilLevel() {
+        return 0;
+    }
+    public int getMaintenanceLevel() {
+        return 0;
+    }
+    public int getGlitchProbability() {
+        return 0;
+    }
+    public int getCageCleanliness() {
+        return 0;
+    }
+    public int getLitterBoxCleanliness() {
+        return 0;
+    }
+    public String getNoise() {
+        return "";
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public void tick() {
-        happiness -= 1;
-
-        if (getRandomBoolean()) {
-            System.out.println(ANSI_CYAN + getName() + ANSI_RESET + " found the water and drank some on their own.");
-            giveWater();
-        }
-
-        if (getHunger() <= 6) {
-            System.out.println(ANSI_CYAN + getName() + ANSI_RESET + " is hungry.");
-        }
-        if (getThirst() <= 6) {
-            System.out.println(ANSI_CYAN + getName() + ANSI_RESET + " is thirsty.");
-        }
-        if (getHappiness() <= 6) {
-            System.out.println(ANSI_CYAN + getName() + ANSI_RESET + " wants to play.");
-        }
-
-        displayStats();
-    }
-
-    public boolean getRandomBoolean() {
-        Random random = new Random();
-        return random.nextBoolean();
-    }
-
-    // Text Colors
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
 }
-
 
