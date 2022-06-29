@@ -37,6 +37,7 @@ public class OrganicDog extends OrganicPet {
 
     @Override
     public void displayStats() {
+        System.out.println();
         System.out.println(getName() + " " + getNoise() + " status:");
         System.out.println("Age: " + getAge());
         displayHunger();
@@ -67,7 +68,7 @@ public class OrganicDog extends OrganicPet {
                 }
             }
         }
-        if (getHungerLevel() == 0) {
+        if (getHungerLevel() < 1) {
             System.out.print(ANSI_RED + "♥♥♥♥♥♥♥♥♥♥" + ANSI_RESET);
         }
         System.out.println();

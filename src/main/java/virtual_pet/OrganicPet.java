@@ -59,15 +59,15 @@ public abstract class OrganicPet extends VirtualPet {
 
     @Override
     public void playWithPet() {
-        if (getBoredomLevel()+2 > 10) {
+        if (getBoredomLevel()+3 > 10) {
             boredomLevel = 10;
         } else {
-            boredomLevel += 2;
+            boredomLevel += 3;
         }
-        if (getNeedsPottyLevel()+2 > 10) {
+        if (getNeedsPottyLevel()+3 > 10) {
             needsPottyLevel = 10;
         } else {
-            needsPottyLevel += 2;
+            needsPottyLevel += 3;
         }
     }
 

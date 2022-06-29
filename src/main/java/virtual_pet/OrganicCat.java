@@ -32,6 +32,7 @@ public class OrganicCat extends OrganicPet {
 
     @Override
     public void displayStats() {
+        System.out.println();
         System.out.println(getName() + " " + getNoise() + " status:");
         System.out.println("Age: " + getAge());
         displayHunger();

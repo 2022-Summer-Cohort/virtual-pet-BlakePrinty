@@ -1,16 +1,20 @@
 package virtual_pet;
 
+import java.util.Random;
+
 public abstract class RoboticPet extends VirtualPet {
     private int oilLevel;
     private int maintenanceLevel;
     private int glitchProbability;
     private boolean isGlitching;
 
+    Random rand = new Random();
+
     public RoboticPet(String name, int age) {
         super(name, age);
-        this.oilLevel = 10;
-        this.maintenanceLevel = 10;
-        this.glitchProbability = 0;
+        this.oilLevel = rand.nextInt(10);
+        this.maintenanceLevel = rand.nextInt(10);
+        this.glitchProbability = rand.nextInt(10);
         this.isGlitching = false;
     }
 
@@ -32,18 +36,49 @@ public abstract class RoboticPet extends VirtualPet {
 
     @Override
     public void oilPet() {
-        if (getOilLevel()+2 > 10) {
+        if (getOilLevel()+3 > 10) {
             oilLevel = 10;
         } else {
-            oilLevel += 2;
+            oilLevel += 3;
         }
     }
     @Override
     public void maintainPet() {
-        if (getMaintenanceLevel()+2 > 10) {
+        if (getMaintenanceLevel()+3 > 10) {
             maintenanceLevel = 10;
         } else {
-            maintenanceLevel += 2;
+            maintenanceLevel += 3;
+        }
+    }
+    @Override
+    public void playWithPet() {
+        if (getGlitchProbability()+3 > 10) {
+            glitchProbability = 10;
+        } else {
+            glitchProbability += 3;
+        }
+    }
+
+    public void updateOilLevel(int change) {
+        if (oilLevel+change < 1) {
+            oilLevel = 0;
+        } else {
+            oilLevel += change;
+        }
+
+    }
+    public void updateMaintenanceLevel(int change) {
+        if (maintenanceLevel+change < 1) {
+            maintenanceLevel = 0;
+        } else {
+            maintenanceLevel += change;
+        }
+    }
+    public void updateGlitchProbability(int change) {
+        if (glitchProbability+change < 1) {
+            glitchProbability = 0;
+        } else {
+            glitchProbability += change;
         }
     }
 }
