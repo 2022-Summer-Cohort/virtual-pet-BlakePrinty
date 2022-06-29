@@ -3,46 +3,22 @@ package virtual_pet;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class VirtualPetTest {
-
     @Test
-    public void shouldReturnMyla() {
-        // Creates a new pet with the name Myla
-        VirtualPet underTest = new VirtualPet("Myla", 100, 100, 100);
-
-        String result = underTest.getName();
-
-        assertEquals("Myla", result);
+    public void getNameShouldReturnName() {
+        VirtualPet underTest = new OrganicDog("test", 1);
+        assertEquals("test", underTest.getName());
     }
-
     @Test
-    public void shouldReturn90HungerLevel() {
-        // Creates a new pet with a hunger level of 90
-        VirtualPet underTest = new VirtualPet("Myla", 90, 100, 100);
-
-        int result = underTest.getHungerLevel();
-
-        assertEquals(90, result);
+    public void getAgeShouldReturnAge() {
+        VirtualPet underTest = new OrganicDog("test", 15);
+        assertEquals(12, underTest.getAge());
     }
-
     @Test
-    public void shouldReturn50StaminaLevel() {
-        // Creates a new pet with a hunger level of 90
-        VirtualPet underTest = new VirtualPet("Myla", 100, 50, 100);
-
-        int result = underTest.getStaminaLevel();
-
-        assertEquals(50, result);
-    }
-
-    @Test
-    public void shouldReturn200ThirstLevel() {
-        // Creates a new pet with a hunger level of 90
-        VirtualPet underTest = new VirtualPet("Myla", 100, 100, 200);
-
-        int result = underTest.getStaminaLevel();
-
-        assertEquals(200, result);
+    public void isDeadIsFalse() {
+        VirtualPet underTest = new OrganicDog("test", 15);
+        assertFalse(underTest.isDead());
     }
 }
